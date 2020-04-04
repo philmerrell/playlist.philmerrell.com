@@ -7,5 +7,5 @@ import { apiStackProps } from './api-stack-props.dev';
 
 const app = new cdk.App();
 
-new AwsIonicStarterClientStack(app, 'AwsIonicStarterClientStack', clientStackProps);
-// new AwsIonicStarterApiStack(app, 'AwsIonicStarterApiStack', apiStackProps);
+new AwsIonicStarterClientStack(app, 'PlaylistClientStack', clientStackProps);
+new AwsIonicStarterApiStack(app, 'PlaylistApiStack', apiStackProps);

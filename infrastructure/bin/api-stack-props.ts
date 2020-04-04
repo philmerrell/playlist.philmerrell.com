@@ -8,6 +8,7 @@ export interface ApiStackProps extends cdk.StackProps {
   cognitoClientId: string;
   cognitoDomain: string;
   cognitoLogoutRoute: string;
+  route53ARecordName: string;
   route53ZoneDomainName: string;
   tagKey: string;
   tagValue: string;

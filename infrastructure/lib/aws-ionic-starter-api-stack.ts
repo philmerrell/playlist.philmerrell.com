@@ -164,7 +164,7 @@ export class AwsIonicStarterApiStack extends cdk.Stack {
     });
 
     new route53.ARecord(this, 'CreateAliasRecord', {
-      recordName: 'starter-api',
+      recordName: props.route53ARecordName,
       zone: zone,
       target: route53.RecordTarget.fromAlias(new targets.ApiGateway(api))
     })
