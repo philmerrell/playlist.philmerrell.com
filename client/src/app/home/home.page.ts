@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { WebsocketService } from '../core/websocket.service';
+import { AppleMusicService } from '../core/services/apple-music.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -8,14 +11,30 @@ import { AuthService } from '../auth/auth.service';
 })
 export class HomePage implements OnInit {
   isAuthenticated = false;
+  socket$: Observable<any>;
+  message: string;
   user;
   testResult;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private websocketService: WebsocketService,
+    private appleMusicService: AppleMusicService) {}
 
   async ngOnInit() {
     this.isAuthenticated = await this.authService.isAuthenticated();
     this.getUser();
+    // this.socket$ = this.websocketService.getSocket();
+  }
+
+  sendMessage(message) {
+    this.websocketService.sendMessage({action: 'echo', data: message });
+  }
+
+
+  echoTest() {
+    const message = JSON.stringify({action: 'echo', data: 'test' });
+    this.websocketService.sendMessage({action: 'echo', data: 'test' });
   }
 
   login() {
@@ -40,6 +59,10 @@ export class HomePage implements OnInit {
 
   async testApi() {
     this.testResult = await this.authService.testApi().toPromise();
+  }
+
+  connectAppleMusic() {
+    this.appleMusicService.authorize();
   }
 
 

@@ -33,7 +33,6 @@ export class AuthService {
   }
 
   getTokensFromCognito(postObj: { code: string; state: string;}) {
-
     return this.authClient.post(`${environment.apiBaseUrl}/v1/auth/token`, postObj, { withCredentials: true });
   }
 
@@ -76,6 +75,16 @@ export class AuthService {
 
   getTokenObservable() {
     return this.tokensSubject.asObservable();
+  }
+
+  setIsConnectedToMusicPlatform(value: boolean) {
+    const connected = {connected: value }
+    Storage.set({ key: `${environment.localStoragePrefix}-platform-connected`, value: JSON.stringify(connected) });
+  }
+
+  async getIsConnectedToMusicPlatform() {
+    const connected = await Storage.get({ key: `${environment.localStoragePrefix}-platform-connected`});
+    return JSON.parse(connected.value);
   }
 
   
